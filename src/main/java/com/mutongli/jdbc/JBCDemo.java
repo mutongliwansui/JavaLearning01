@@ -11,7 +11,16 @@ import java.util.Enumeration;
 public class JBCDemo {
     public void test() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
-        Enumeration<Driver> driver = DriverManager.getDrivers();
+        //com.mysql.jdbc.Driver类里面有个静态代码块
+        /**
+         * static {
+         *         try {
+         *             DriverManager.registerDriver(new Driver()); //在此处把Driver注册到DriverManager
+         *         } catch (SQLException var1) {
+         *             throw new RuntimeException("Can't register driver!");
+         *         }
+         *     }
+         */
         Connection connection = DriverManager.getConnection("jdbc:mysql://rm-bp1wj174j4k96rl396o.mysql.rds.aliyuncs.com:3306/cbt_db"
                 , "mtl", "Ly520101");
         PreparedStatement ps = connection.prepareStatement("select * from users ");
